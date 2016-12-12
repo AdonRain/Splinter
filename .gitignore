@@ -1,4 +1,4 @@
-# OSX
+SX
 #
 .DS_Store
 
@@ -40,3 +40,4 @@ buck-out/
 \.buckd/
 android/app/libs
 *.keystore
+
