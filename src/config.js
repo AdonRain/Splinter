@@ -19,9 +19,7 @@ export const pages = [{
 
 export const data = {
     cash: '0',
-    income: [
-        'Salary': '0',
-    ],
+    income: [ ],
     expenses: [ ],
     assets: [ ],
     liabilities: [ ],

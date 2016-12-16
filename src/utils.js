@@ -8,9 +8,11 @@ export const sum = (items, index, except) => {
     }, 0);
 };
 
-export const stat = ({cash, income, expenses}) => {
+export const stat = ({cash, income, expenses, assets, liabilities}) => {
     const totalIncome = sum(income, 1);
     const totalExpenses = sum(expenses, 1);
+    const totalAssets = sum(assets, 1);
+    const totalLiabilites = sum(liabilities, 1);
     const passiveIncome = sum(income, 1, 'Salary');
 
     return [{
@@ -20,7 +22,7 @@ export const stat = ({cash, income, expenses}) => {
         },
         right: {
             name: '二倍支出',
-            value: 2 * totalIncome,
+            value: 2 * totalExpenses,
         }
     }, {
         left: {
@@ -39,6 +41,15 @@ export const stat = ({cash, income, expenses}) => {
         right: {
             name: '现金',
             value: cash,
+        }
+    }, {
+        left: {
+            name: '负债',
+            value: totalLiabilites,
+        },
+        right: {
+            name: '资产',
+            value: totalAssets,
         }
     }];
 }

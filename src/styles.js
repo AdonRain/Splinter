@@ -35,7 +35,7 @@ export default StyleSheet.create({
     },
     statWrap: {
         paddingHorizontal: 15,
-        paddingVertical: 30,
+        paddingVertical: 20,
     },
     statBar: {
         height: 30,

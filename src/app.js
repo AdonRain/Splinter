@@ -122,7 +122,8 @@ export default class Splinter extends Component {
                         <ScrollView>
                             {
                                 statData.map(({left, right}, i) => {
-                                    const ratio = left.value / right.value;
+                                    const lv = left.value || 0, rv = right.value || 0;
+                                    const ratio = rv > 0 ? lv / rv : 0;
                                     const width = ratio * (screenWidth - 30);
                                     return (
                                         <View
@@ -140,8 +141,8 @@ export default class Splinter extends Component {
                                                 }}>{width > 60 && `${ (100 * ratio).toFixed(2) }%`}</Text>
                                             </View>
                                             <View style={styles.statInfo}>
-                                                <Text style={styles.statText}>{left.name} ::: {left.value}</Text>
-                                                <Text style={styles.statText}>{right.value} ::: {right.name}</Text>
+                                                <Text style={styles.statText}>{left.name} ::: {lv}</Text>
+                                                <Text style={styles.statText}>{rv} ::: {right.name}</Text>
                                             </View>
                                         </View>
                                     )
