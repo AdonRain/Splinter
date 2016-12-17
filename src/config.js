@@ -1,7 +1,7 @@
 export const menus = ['流', '收', '支', '资', '债'];
 
 export const pages = [{
-    name: 'cash',
+    name: 'stat',
     head: '现金流',
 }, {
     name: 'income',
@@ -11,14 +11,13 @@ export const pages = [{
     head: ['项目', '金额'],
 }, {
     name: 'assets',
-    head: ['项目', '成本', '首付'],
+    head: ['项目', '金额'],
 }, {
     name: 'liabilities',
-    head: ['项目', '总额', '期限'],
+    head: ['项目', '金额'],
 }];
 
 export const data = {
-    cash: '0',
     income: [ ],
     expenses: [ ],
     assets: [ ],

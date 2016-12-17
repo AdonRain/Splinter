@@ -38,18 +38,8 @@ export default class Splinter extends Component {
         });
     }
     toggleMask(flag, name = '', item = -1){
-        let inputText = '';
         const {data} = this.state;
-
-        if(flag){
-            if(name == 'cash'){
-                inputText = String(data[name]);
-            }else{
-                if(item > -1){
-                    inputText = data[name][item].join(',');
-                }
-            }
-        }
+        const inputText = flag && item > -1 ? data[name][item].join(',') : '';
 
         this.setState({
             inputText,
@@ -61,19 +51,18 @@ export default class Splinter extends Component {
     doSubmit(type){
         const {data, isEdit, inputText, editing: {name, item}} = this.state;
         const newData = Object.assign({}, data);
-        const newItem = inputText.split(',');
         const spliceLen = isEdit ? 1 : 0;
 
         if(type){
-            if(name == 'cash'){
-                newData[name] = inputText;
+            if(name == 'stat'){
+                this.postData(inputText);
             }else{
-                newData[name].splice(item, spliceLen, newItem);
+                newData[name].splice(item, spliceLen, inputText.split(','));
                 newData[name].sort((a, b) => (b[1] - a[1]));
             }
         }else{
-            if(name == 'cash'){
-                return this.toggleMask(false);
+            if(name == 'stat'){
+                this.getData(inputText);
             }else{
                 newData[name].splice(item, spliceLen);
             }
@@ -86,6 +75,35 @@ export default class Splinter extends Component {
                 this.setState({data: newData});
                 this.toggleMask(false);
             }
+        });
+    }
+    getData(url){
+        fetch(url).then(res => {
+            return res.json();
+        }).then(({code, msg, data}) => {
+            if(code == 200){
+                this.setState({data});
+            }else{
+                alert(msg);
+            }
+        }).catch(err => {
+            alert(JSON.stringify(err));
+        });
+    }
+    postData(url){
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(this.state.data),
+        }).then(res => {
+            return res.json();
+        }).then(({code, msg}) => {
+            alert(code == 200 ? '上传成功' : msg);
+        }).catch(err => {
+            alert(JSON.stringify(err));
         });
     }
     render() {
@@ -210,12 +228,20 @@ export default class Splinter extends Component {
                                     <TouchableOpacity
                                         onPress={doSubmit.bind(this, true)}
                                         style={styles.operBtns}>
-                                        <Text style={styles.operBtnText}>{isEdit ? '确定' : '添加'}</Text>
+                                        <Text style={styles.operBtnText}>
+                                            {page.name == 'stat' ? '上传' : (
+                                                isEdit ? '确定' : '添加'
+                                            )}
+                                        </Text>
                                     </TouchableOpacity>
                                     <TouchableOpacity
                                         onPress={doSubmit.bind(this, false)}
                                         style={styles.operBtns}>
-                                        <Text style={styles.operBtnText}>{isEdit && page.name !== 'cash' ? '删除' : '取消'}</Text>
+                                        <Text style={styles.operBtnText}>
+                                            {page.name == 'stat' ? '下载' : (
+                                                isEdit ? '删除' : '取消'
+                                            )}
+                                        </Text>
                                     </TouchableOpacity>
                                 </View>
                             </View>
