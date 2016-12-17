@@ -14,7 +14,7 @@ export const stat = ({cash, income, expenses, assets, liabilities}) => {
     const totalAssets = sum(assets, 1);
     const totalLiabilites = sum(liabilities, 1);
     const passiveIncome = sum(income, 1, 'Salary');
-    const cashAmount = sum(assets, 1, 'Cash');
+    const exceptCash = sum(assets, 1, 'Cash');
 
     return [{
         left: {
@@ -41,7 +41,7 @@ export const stat = ({cash, income, expenses, assets, liabilities}) => {
         },
         right: {
             name: '现金',
-            value: cashAmount,
+            value: totalIncome - exceptCash,
         }
     }, {
         left: {
