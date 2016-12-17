@@ -41,7 +41,7 @@ export const stat = ({cash, income, expenses, assets, liabilities}) => {
         },
         right: {
             name: '现金',
-            value: totalIncome - exceptCash,
+            value: totalAssets - exceptCash,
         }
     }, {
         left: {
