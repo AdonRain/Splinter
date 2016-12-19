@@ -8,7 +8,7 @@ export const sum = (items, index, except) => {
     }, 0);
 };
 
-export const stat = ({cash, income, expenses, assets, liabilities}) => {
+export const stat = ({income, expenses, assets, liabilities}) => {
     const totalIncome = sum(income, 1);
     const totalExpenses = sum(expenses, 1);
     const totalAssets = sum(assets, 1);
